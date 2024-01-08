@@ -9,6 +9,7 @@ var startTime;
 var elapsedTime = 0;
 var isTimerRunning = false;
 
+
 function startTimer() {
     if (!isTimerRunning) {
         startTime = localStorage.getItem("startTime") || Date.now() + 20 * 60 * 1000;
@@ -21,6 +22,21 @@ function startTimer() {
         timerElement.textContent = formatTime(startTime - Date.now());
     }
 }
+
+// Prevent the extension from closing on window click
+window.addEventListener("click", function(event) {
+    event.preventDefault();
+});
+
+// Prevent the extension from closing on tab switch
+window.addEventListener("visibilitychange", function(event) {
+    event.preventDefault();
+});
+
+// Keep the extension running even when the window is closed
+window.addEventListener("beforeunload", function(event) {
+    event.preventDefault();
+});
 
 function updateTimer() {
     var currentTime = Date.now();
