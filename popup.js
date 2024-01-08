@@ -20,7 +20,7 @@ var currentTime = Date.now();
 elapsedTime = startTime - currentTime;
 if (elapsedTime <= 0) {
     clearInterval(timerInterval);
-    timerElement.textContent = "00:00:00";
+    timerElement.innerHTML = "00:00:00";
     isTimerRunning = false;
     // Show popup
     alert("Take a 20-second break!");
@@ -28,7 +28,7 @@ if (elapsedTime <= 0) {
     startShortTimer();
 } else {
     var formattedTime = formatTime(elapsedTime);
-    timerElement.textContent = formattedTime;
+    timerElement.innerHTML = formattedTime;
 }
 }
 
@@ -76,7 +76,7 @@ timerElement.textContent = "00:00:00";
 isTimerRunning = false;
 }
 
-startButton.addEventListener("click", startTimer);
+startButton.onclick = startTimer();
 resumeButton.addEventListener("click", resumeTimer);
 resetButton.addEventListener("click", resetTimer);
 
