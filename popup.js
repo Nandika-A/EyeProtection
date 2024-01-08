@@ -1,4 +1,17 @@
 var timerElement = document.getElementById("timer");
+var pauseButton = document.getElementById("pause");
+var isTimerPaused = false;
+
+pauseButton.addEventListener("click", pauseTimer);
+
+function pauseTimer() {
+    if (isTimerRunning) {
+        clearInterval(timerInterval);
+        isTimerRunning = false;
+        isTimerPaused = true;
+    }
+}
+
 var startButton = document.getElementById("start");
 var resumeButton = document.getElementById("resume");
 var resetButton = document.getElementById("reset");
@@ -8,11 +21,12 @@ var elapsedTime = 0;
 var isTimerRunning = false;
 
 function startTimer() {
-if (!isTimerRunning) {
-    startTime = Date.now() + 20 * 60 * 1000;
-    timerInterval = setInterval(updateTimer, 1000);
-    isTimerRunning = true;
-}
+    if (!isTimerRunning) {
+        startTime = Date.now() + 20 * 60 * 1000;
+        timerInterval = setInterval(updateTimer, 1000);
+        isTimerRunning = true;
+        timerElement.textContent = formatTime(startTime - Date.now());
+    }
 }
 
 function updateTimer() {
@@ -64,9 +78,12 @@ return formattedHours + ":" + formattedMinutes + ":" + formattedSeconds;
 }
 
 function resumeTimer() {
-if (!isTimerRunning) {
-    startTimer();
-}
+    if (!isTimerRunning && isTimerPaused) {
+        startTime = Date.now() + elapsedTime;
+        timerInterval = setInterval(updateTimer, 1000);
+        isTimerRunning = true;
+        isTimerPaused = false;
+    }
 }
 
 function resetTimer() {
@@ -74,6 +91,7 @@ clearInterval(timerInterval);
 elapsedTime = 0;
 timerElement.textContent = "00:00:00";
 isTimerRunning = false;
+startTimer();
 }
 
 startButton.onclick = startTimer();
