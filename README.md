@@ -7,3 +7,8 @@ HTML, CSS, Javascript
 1. Two timers, for 20 minutes and 20 seconds each
 2. Play, pause, restart, and resume the timer
 3. Notifications to take breaks and to start the work
+
+# How to use it:
+1. Clone this repository
+2. Load this extension to chrome
+3. Enable the extension
