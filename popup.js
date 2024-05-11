@@ -4,132 +4,57 @@ var isTimerPaused = false;
 var startButton = document.getElementById("start");
 var resumeButton = document.getElementById("resume");
 var resetButton = document.getElementById("reset");
-var timerInterval;
-var startTime;
-var elapsedTime = 0;
 var isTimerRunning = false;
 
+// Listen for messages from background script
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+    console.log(message);
+    if (message.type === "updateTimer") {
+        // Update timer display
+        timerElement.textContent = message.time;
+    }
+});
 
 function startTimer() {
     if (!isTimerRunning) {
-        startTime = localStorage.getItem("startTime") || Date.now() + 20 * 60 * 1000;
-        elapsedTime = localStorage.getItem("elapsedTime") || 0;
-        if (elapsedTime > 0) {
-            startTime += elapsedTime;
-        }
-        timerInterval = setInterval(updateTimer, 1000);
+        // Send message to background script to start the timer
+        chrome.runtime.sendMessage({ type: "startTimer" });
         isTimerRunning = true;
-        timerElement.textContent = formatTime(startTime - Date.now());
     }
 }
 
-// Prevent the extension from closing on window click
-window.addEventListener("click", function(event) {
-    event.preventDefault();
-});
-
-// Prevent the extension from closing on tab switch
-window.addEventListener("visibilitychange", function(event) {
-    event.preventDefault();
-});
-
-// Keep the extension running even when the window is closed
-window.addEventListener("beforeunload", function(event) {
-    event.preventDefault();
-});
-
-function updateTimer() {
-    var currentTime = Date.now();
-    elapsedTime = startTime - currentTime;
-    if (elapsedTime <= 0) {
-        clearInterval(timerInterval);
-        timerElement.innerHTML = "00:00:00";
-        isTimerRunning = false;
-        // Show popup
-        alert("Take a 20-second break!");
-        // Start 20-second timer
-        startShortTimer();
-    } else {
-        var formattedTime = formatTime(elapsedTime);
-        timerElement.innerHTML = formattedTime;
-    }
-}
-
-function startShortTimer() {
-    startTime = Date.now() + 20 * 1000;
-    timerInterval = setInterval(updateShortTimer, 1000);
-    isTimerRunning = true;
-}
-
-function updateShortTimer() {
-    var currentTime = Date.now();
-    elapsedTime = startTime - currentTime;
-    if (elapsedTime <= 0) {
-        clearInterval(timerInterval);
-        timerElement.textContent = "00:00:00";
-        isTimerRunning = false;
-        // Update long timer in local storage
-        localStorage.setItem("startTime", Date.now() + 20 * 60 * 1000);
-        localStorage.setItem("elapsedTime", 0);
-        // Start the long timer again for 20 minutes
-        startTimer();
-    } else {
-        var formattedTime = formatTime(elapsedTime);
-        timerElement.textContent = formattedTime;
-    }
-}
-
-
-function formatTime(time) {
-    var seconds = Math.floor((time / 1000) % 60);
-    var minutes = Math.floor((time / 1000 / 60) % 60);
-    var hours = Math.floor((time / 1000 / 60 / 60) % 24);
-
-    var formattedSeconds = seconds.toString().padStart(2, "0");
-    var formattedMinutes = minutes.toString().padStart(2, "0");
-    var formattedHours = hours.toString().padStart(2, "0");
-
-    return formattedHours + ":" + formattedMinutes + ":" + formattedSeconds;
-}
-
+startButton.addEventListener("click", startTimer);
 
 pauseButton.addEventListener("click", pauseTimer);
 
 function pauseTimer() {
     if (isTimerRunning) {
-        clearInterval(timerInterval);
-        isTimerRunning = false;
+        // Send message to background script to pause the timer
+        chrome.runtime.sendMessage({ type: "pauseTimer" });
         isTimerPaused = true;
     }
 }
 
+resumeButton.addEventListener("click", resumeTimer);
 
 function resumeTimer() {
-    if (!isTimerRunning && isTimerPaused) {
-        startTime = Date.now() + elapsedTime;
-        timerInterval = setInterval(updateTimer, 1000);
-        isTimerRunning = true;
+    if (isTimerPaused) {
+        // Send message to background script to resume the timer
+        chrome.runtime.sendMessage({ type: "resumeTimer" });
         isTimerPaused = false;
     }
 }
 
-function resetTimer() {
-    clearInterval(timerInterval);
-    elapsedTime = 0;
-    timerElement.textContent = "00:00:00";
-    isTimerRunning = false;
-    startTimer();
-}
-
-startButton.onclick = startTimer;
-resumeButton.addEventListener("click", resumeTimer);
 resetButton.addEventListener("click", resetTimer);
 
-// Save start time and elapsed time to localStorage
-window.addEventListener("beforeunload", function() {
-    localStorage.setItem("startTime", startTime);
-    localStorage.setItem("elapsedTime", elapsedTime);
-});
+function resetTimer() {
+    // Send message to background script to reset the timer
+    chrome.runtime.sendMessage({ type: "resetTimer" });
+    isTimerRunning = false;
+}
 
 // Start the timer when the page loads
-window.addEventListener("load", startTimer);
+window.addEventListener("load", function() {
+    // Send message to background script to get the current timer state
+    chrome.runtime.sendMessage({ type: "getTimerState" });
+});

@@ -6,9 +6,19 @@
     "permissions": [
         "tabs",
         "activeTab",
-        "storage"
+        "storage",
+        "notifications"
     ],
     "action": {
         "default_popup": "popup.html"
-    }
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content_script.js"]
+        }
+    ]
 }
