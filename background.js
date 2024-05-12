@@ -2,7 +2,7 @@ var timerInterval;
 var startTime;
 var elapsedTime = 0;
 var isTimerRunning = false;
-var firstIntervalDuration = 20 * 1000; // 20 seconds
+var firstIntervalDuration = 20 * 60 * 1000; // 20 minutes in milliseconds
 var secondIntervalDuration = 10 * 1000; // 10 seconds
 
 // Function to start the timer
