@@ -2,15 +2,21 @@
     "manifest_version": 3,
     "name": "EyeProtection",
     "version": "1.0",
-    "description": "Chrome extension that implements the 20 20 20 rule",
+    "description": "An extension to protect your eyes with the 20-20-20 rule and customizable schedules.",
     "permissions": [
-        "tabs",
-        "activeTab",
         "storage",
-        "notifications"
+        "notifications",
+        "tabs",
+        "activeTab"
     ],
     "action": {
-        "default_popup": "popup.html"
+        "default_popup": "popup.html",  
+        "default_icon": {
+            "16": "images/hourglass.png",
+            "48": "images/hourglass.png",
+            "128": "images/hourglass.png"
+        },
+        "default_title": "Eye Protection Timer"
     },
     "background": {
         "service_worker": "background.js"
@@ -18,7 +24,22 @@
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
-            "js": ["content_script.js"]
+            "js": ["content_script.js"] 
         }
-    ]
+    ],
+    "icons": {
+        "16": "images/hourglass.png",
+        "48": "images/hourglass.png",
+        "128": "images/hourglass.png"
+    },
+    "commands": {
+        "activate_extension": {
+            "suggested_key": {
+                "default": "Ctrl+E",
+                "mac": "Command+E"
+            },
+            "description": "Activate the extension"
+        }
+    },
+    "options_page": "options.html"
 }
