@@ -4,6 +4,13 @@ const startButton = document.getElementById("start");
 const resumeButton = document.getElementById("resume");
 const resetButton = document.getElementById("reset");
 const themeToggle = document.getElementById("theme-toggle");
+let custom_message="It's time to take a break. Look at something 20 feet away for 20 seconds.";
+        
+chrome.storage.sync.get('customMessage', (data)=> {
+    if (data.customMessage) {
+        custom_message=data.customMessage;
+    }
+});
 
 // Schedule Tab elements
 const startTimeInput = document.getElementById("startTime");
@@ -73,7 +80,20 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
   if (message.type === "updateTimer") {
     timerElement.textContent = message.time;
   }
+  else if(message.type === "breakTimeNotification"){
+    chrome.notifications.create("breakTimeNotification", {
+        type: "basic",
+        iconUrl: "images/hourglass.png",
+        title: "Take a break!",
+        message: custom_message
+    });
+  }
+
+
 });
+
+
+
 
 // Function to save the schedule
 saveScheduleButton.addEventListener("click", function() {

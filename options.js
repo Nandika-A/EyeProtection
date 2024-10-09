@@ -44,3 +44,10 @@ shortcutInput.addEventListener('keydown', function(e) {
     console.log(`Captured keys: ${keys.join('+')}`); 
     shortcutInput.value = keys.join('+'); 
 });
+
+document.getElementById('saveMessage').addEventListener('click', function() {
+    const message = document.getElementById('userinput').value;
+        chrome.storage.sync.set({ customMessage: message }, function() {
+        document.getElementById('messagesaved').textContent = 'Message saved successfully!';
+    });
+});

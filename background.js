@@ -5,7 +5,7 @@ let timerInterval;
 let startTime;
 let elapsedTime = 0;
 let isTimerRunning = false;
-const firstIntervalDuration = 20 * 60 * 1000; // 20 minutes in milliseconds
+const firstIntervalDuration = 0.1667 * 60 * 1000; // 20 minutes in milliseconds
 const secondIntervalDuration = 20 * 1000; // 20 seconds for break
 
 // Start timer
@@ -73,12 +73,7 @@ function formatTime(time) {
 
 // Function to notify break time
 function notifyBreakTime() {
-    chrome.notifications.create("breakTimeNotification", {
-        type: "basic",
-        iconUrl: "images/hourglass.png",
-        title: "Take a break!",
-        message: "It's time to take a break. Look at something 20 feet away for 20 seconds."
-    });
+    chrome.runtime.sendMessage({ type: "breakTimeNotification"});
 }
 
 // Function to start short break timer
