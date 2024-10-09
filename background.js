@@ -5,7 +5,7 @@ let timerInterval;
 let startTime;
 let elapsedTime = 0;
 let isTimerRunning = false;
-const firstIntervalDuration = 0.1667 * 60 * 1000; // 20 minutes in milliseconds
+const firstIntervalDuration = 20 * 60 * 1000; // 20 minutes in milliseconds
 const secondIntervalDuration = 20 * 1000; // 20 seconds for break
 
 // Start timer
