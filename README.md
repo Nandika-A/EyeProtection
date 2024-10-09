@@ -15,13 +15,15 @@ The Eye Protection Google extension is designed to remind users to follow the **
 - **Dark Theme**: Enhanced visual comfort for night-time use
 - **Custom Settings Button**: Utilizes FontAwesome to invoke the Eye Protection extension using custom shortcut keys
 - Enhanced styling with CSS for improved aesthetics
-- Set up a testing environment to ensure all functions work properly
+- Set up a testing environment to ensure all functions work properly (Testing Purpose)
 
 ## How to Use
 1. Clone this repository
 2. Go to `chrome://extensions/` and enable developers mode
 3. Load the extension in Chrome
 4. Enable the extension
+
+Note : For Mac Users, please enable the Alerts from system settings for your browser or else by default you won't notification for the breaks.
 
 ## For Development Purposes
 
