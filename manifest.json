@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "EyeProtection",
     "version": "1.0",
-    "description": "Chrome extension that implements the 20 20 20 rule",
+    "description": "Chrome extension that implements the 20-20-20 rule to reduce eye strain by reminding users to take breaks.",
     "permissions": [
         "tabs",
         "activeTab",
@@ -10,15 +10,29 @@
         "notifications"
     ],
     "action": {
-        "default_popup": "popup.html"
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "images/hourglass.png",
+            "48": "images/hourglass.png",
+            "128": "images/hourglass.png"
+        }
     },
     "background": {
         "service_worker": "background.js"
     },
+    "icons": {
+        "16": "images/hourglass.png",
+        "48": "images/hourglass.png",
+        "128": "images/hourglass.png"
+    },
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
-            "js": ["content_script.js"]
+            "js": ["content_script.js"],
+            "run_at": "document_end"
         }
+    ],
+    "host_permissions": [
+        "<all_urls>"
     ]
 }

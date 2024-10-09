@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Eye Protection</title>
-    <link rel="stylesheet" href="popup.css">
-    
-</head>
-<body>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
     <h1>Eye Protection</h1>
-    <button id="resume">Resume</button>
-    <button id="pause">Pause</button>
-    <button id="reset">Reset</button>
-    <button id="start">Start</button>
+
+    <!-- Dark Mode Toggle -->
+    <div id="toggle">
+      <h2>Dark Mode</h2>
+      <label for="theme-toggle" class="switch">
+        <input type="checkbox" id="theme-toggle" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div id="button-container">
+      <button id="resume">Resume</button>
+      <button id="pause">Pause</button>
+      <button id="reset">Reset</button>
+      <button id="start">Start</button>
+    </div>
+
     <div id="timer">00:00:00</div>
+
     <script src="popup.js"></script>
-</body>
+  </body>
 </html>
