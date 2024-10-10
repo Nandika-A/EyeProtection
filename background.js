@@ -73,12 +73,7 @@ function formatTime(time) {
 
 // Function to notify break time
 function notifyBreakTime() {
-    chrome.notifications.create("breakTimeNotification", {
-        type: "basic",
-        iconUrl: "images/hourglass.png",
-        title: "Take a break!",
-        message: "It's time to take a break. Look at something 20 feet away for 20 seconds."
-    });
+    chrome.runtime.sendMessage({ type: "breakTimeNotification"});
 }
 
 // Function to start short break timer
