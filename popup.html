@@ -4,15 +4,49 @@
     <meta charset="UTF-8">
     <title>Eye Protection</title>
     <link rel="stylesheet" href="popup.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <h1>Eye Protection</h1>
-    <button id="resume">Resume</button>
-    <button id="pause">Pause</button>
-    <button id="reset">Reset</button>
-    <button id="start">Start</button>
-    <div id="timer">00:00:00</div>
+    
+    <!--dark mode toggle -->
+    <label for="theme-toggle" class="switch">
+        <input type="checkbox" id="theme-toggle">
+        <span class="slider round"></span>
+    </label>
+    <p>Dark Mode</p>
+    
+    <!--tab navigation -->
+    <div class="tabs">
+        <button class="tab-button active" data-target="timerTab">Timer</button>
+        <button class="tab-button" data-target="scheduleTab">Schedule</button>
+    </div>
+
+    <!--timer tab -->
+    <div id="timerTab" class="tab-content active">
+        <button id="start">Start</button>
+        <button id="pause">Pause</button>
+        <button id="resume">Resume</button>
+        <button id="reset">Reset</button>
+        <div id="timer">00:00:00</div>
+    </div>
+
+    <!--schedule tab-->
+    <div id="scheduleTab" class="tab-content">
+        <h2>Schedule</h2>
+        <label for="startTime">Start Time:</label>
+        <input type="time" id="startTime" value="20:00">
+        
+        <label for="endTime">End Time:</label>
+        <input type="time" id="endTime" value="07:00">
+        
+        <button id="saveSchedule">Save</button>
+    </div>
+
+    <a href="options.html" target="_blank" class="settings-link" title="Settings">
+        <i class="fas fa-cog"></i>
+    </a>
+
     <script src="popup.js"></script>
 </body>
 </html>

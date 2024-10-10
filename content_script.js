@@ -34,5 +34,13 @@ function executeTwentyTwentyTwentyRule() {
     }
 }
 
+// Listen for changes to the eye protection state
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+    if (message.type === "enableEyeProtection") {
+        executeTwentyTwentyTwentyRule();
+    } else if (message.type === "disableEyeProtection") {
+    }
+});
+
 // Execute the 20-20-20 rule when the page finishes loading
 window.addEventListener('load', executeTwentyTwentyTwentyRule);

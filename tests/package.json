@@ -1,0 +1,16 @@
+{
+    "name": "eye-protection-extension",
+    "version": "1.0.0",
+    "description": "Eye protection extension with 20-20-20 rule",
+    "scripts": {
+      "test": "jest",
+      "dev": "vite",
+      "build": "vite build"
+    },
+    "devDependencies": {
+      "@babel/preset-env": "^7.16.11",
+      "jest": "^27.5.1",
+      "jest-chrome": "^0.7.2",
+      "vite": "^2.9.9"
+    }
+  }
